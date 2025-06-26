@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterStats : MonoBehaviour
+public class MonsterStats : MonoBehaviour, IHealth
 {
     public int maxHp = 10;
     public int currentHp;

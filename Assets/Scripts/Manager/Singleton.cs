@@ -14,7 +14,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
                 if(instance == null)
                 {
-                    Debug.LogError(typeof(T) + " ΩÃ±€≈Ê¿Ã æ¿ø° æ¯Ω¿¥œ¥Ÿ! æ¿ø° ΩÃ±€≈Ê¿ª πËƒ°«œººø‰.");
+                    //Debug.LogError(typeof(T) + " ΩÃ±€≈Ê¿Ã æ¿ø° æ¯Ω¿¥œ¥Ÿ! æ¿ø° ΩÃ±€≈Ê¿ª πËƒ°«œººø‰.");
                 }
             }
             return instance;
