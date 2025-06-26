@@ -165,7 +165,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.MoreMountains.CorgiEngine
+    Standalone: com.DefaultCompany.GameZam
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -963,7 +963,7 @@ PlayerSettings:
   hmiLogStartupTiming: 0
   hmiCpuConfiguration: 
   apiCompatibilityLevel: 6
-  activeInputHandler: 0
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
   cloudProjectId: 49cb373c-dd4d-4116-887e-f39c60f86e85
   framebufferDepthMemorylessMode: 0
