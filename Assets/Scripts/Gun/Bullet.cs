@@ -17,9 +17,13 @@ public class Bullet : MonoBehaviour
         rb.velocity = dir.normalized * speed;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.TryGetComponent(out IHealth health))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Bullet"))
+        {
+            return;
+        }
+        if (collision.gameObject.TryGetComponent(out IHealth health))
         {
             health.TakeDamage(damage);
         }

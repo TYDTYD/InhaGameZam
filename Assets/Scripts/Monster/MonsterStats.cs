@@ -35,9 +35,9 @@ public class MonsterStats : MonoBehaviour, IHealth
     void Update()
     { 
         // 임시: a 키 누르면 데미지 10 오브젝트 파괴 확인용
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GetComponent<MonsterStats>().TakeDamage(10);
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    GetComponent<MonsterStats>().TakeDamage(10);
+        //}
     }
 }
