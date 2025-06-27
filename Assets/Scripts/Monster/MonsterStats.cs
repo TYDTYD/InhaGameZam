@@ -20,6 +20,8 @@ public class MonsterStats : MonoBehaviour, IHealth
         // Calculate effective damage after defense
         int effectiveDamage = Mathf.Max(damage - defense, 1);   // Ensure at least 1 damage is dealt
         currentHp -= effectiveDamage;
+
+        Debug.Log($"{gameObject.name}가 데미지 {effectiveDamage} 입음. 남은 HP: {currentHp}/{maxHp}");
         // Check if the monster is dead
         if (currentHp <= 0)
         {
