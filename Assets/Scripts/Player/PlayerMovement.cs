@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rigidBody2D;
 
     float moveSpeed = 5f;
-    float jumpForce = 10f;
+    float jumpForce = 15f;
     void Start()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
