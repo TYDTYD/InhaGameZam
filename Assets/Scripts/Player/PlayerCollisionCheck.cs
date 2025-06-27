@@ -11,10 +11,7 @@ public class PlayerCollisionCheck : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    private void Update()
-    {
-        Debug.Log(groundCheck);
-    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
