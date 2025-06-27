@@ -30,7 +30,8 @@ public class Gun : MonoBehaviour
         Bullet bullet = bulletPool.objectPool.Get();
         bullet.transform.position = bulletSpawnPoint.position;
         bullet.transform.rotation = bulletSpawnPoint.rotation;
-        bullet.Fire(bulletSpawnPoint.right, bulletPool);
+        Vector2 dir = bulletSpawnPoint.transform.position - transform.parent.position;
+        bullet.Fire(dir, bulletPool);
 
         StartCoroutine(ReturnBullet(bullet));
     }
