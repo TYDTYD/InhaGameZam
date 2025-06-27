@@ -4,12 +4,17 @@ public class PlayerMovement : MonoBehaviour
 {
     Vector2 moveDirection;
     Rigidbody2D rigidBody2D;
+    PlayerCollisionCheck collisionCheck;
 
     float moveSpeed = 5f;
-    float jumpForce = 10f;
+    float jumpForce = 15f;
+    bool jumped = false;
+    bool doubleJumped = false;
+    bool wallContacted = false;
     void Start()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
+        collisionCheck = GetComponentInChildren<PlayerCollisionCheck>();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -25,7 +30,27 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.performed)
         {
-            rigidBody2D.AddForce(new Vector2(0f, jumpForce),ForceMode2D.Impulse);
+            if (collisionCheck.groundCheck)
+            {
+                jumped = false;
+                doubleJumped = false;
+
+                if (!jumped)
+                {
+                    rigidBody2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                    jumped = true;
+                }
+            }
+            else if (!jumped)
+            {
+                rigidBody2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                jumped = true;
+            }
+            else if (!doubleJumped)
+            {
+                rigidBody2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                doubleJumped = true;
+            }
         }
     }
 
