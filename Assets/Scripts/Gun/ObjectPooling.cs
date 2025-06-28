@@ -7,7 +7,9 @@ public class ObjectPooling : MonoBehaviour
 {
     [SerializeField] Bullet bulletPrefab;
     public ObjectPool<Bullet> objectPool;
-    
+    int defaultCapacity = 40;
+    int maxSize = 100;
+
     void Awake()
     {
         objectPool = new ObjectPool<Bullet>(
@@ -15,29 +17,33 @@ public class ObjectPooling : MonoBehaviour
             OnGetBullet,
             OnReleaseBullet,
             OnDestroyBullet,
-            false, // Make sure to set this to false if you want to control the pool size manually
-            50, // Initial size of the pool
-            100 // Maximum size of the pool
+            true, // Make sure to set this to false if you want to control the pool size manually
+            defaultCapacity, // Initial size of the pool
+            maxSize // Maximum size of the pool
         );
     }
 
     Bullet CreateBullet()
     {
-        GameObject bulletObject = Instantiate(bulletPrefab.gameObject);
-        Bullet bullet = bulletObject.GetComponent<Bullet>();
+        Bullet bullet = Instantiate(bulletPrefab);
+        bullet.Init(objectPool);
         bullet.transform.SetParent(transform);
         return bullet;
     }
 
     void OnGetBullet(Bullet bullet)
     {
-        bullet.gameObject.SetActive(true);
-        // Initialize bullet properties if needed
+        if (bullet != null)
+        {
+            bullet.gameObject.SetActive(true);
+        }
     }
     void OnReleaseBullet(Bullet bullet)
     {
-        bullet.gameObject.SetActive(false);
-        // Reset bullet properties if needed
+        if (bullet!=null)
+        {
+            bullet.gameObject.SetActive(false);
+        }
     }
     void OnDestroyBullet(Bullet bullet)
     {

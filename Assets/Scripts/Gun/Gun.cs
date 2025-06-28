@@ -1,45 +1,37 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 public class Gun : MonoBehaviour
 {
     [SerializeField] Bullet bulletPrefab;
     [SerializeField] ObjectPooling bulletPool;
     [SerializeField] Transform bulletSpawnPoint;
-    [SerializeField] InputActionReference shootAction;
-    [SerializeField] float fireRate = 0.1f;
-    private float nextFireTime = 0f;
-    WaitForSeconds bulletLifeTime;
-
-    private void Awake()
+    float fireRate = 0.1f;
+    float nextTimeToShoot;
+    private void FixedUpdate()
     {
-        bulletLifeTime = new WaitForSeconds(8f);
-    }
-
-    void Update()
-    {
-        if (shootAction.action.IsPressed() && Time.time >= nextFireTime)
+        if (Input.GetMouseButton(0) && Time.fixedTime > nextTimeToShoot && bulletPool != null)
         {
             Shoot();
-            nextFireTime = Time.time + fireRate;
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
         Bullet bullet = bulletPool.objectPool.Get();
-        bullet.transform.position = bulletSpawnPoint.position;
-        bullet.transform.rotation = bulletSpawnPoint.rotation;
+
+        if (bullet == null)
+        {
+            Debug.Log("ÃÑ¾Ë ºÎÁ·");
+            return;
+        }
+            
+
+        bullet.transform.SetPositionAndRotation(bulletSpawnPoint.transform.position, bulletSpawnPoint.rotation);
         Vector2 dir = bulletSpawnPoint.transform.position - transform.parent.position;
-        bullet.Fire(dir, bulletPool);
+        bullet.Fire(dir);
 
-        StartCoroutine(ReturnBullet(bullet));
-    }
+        bullet.Deactivate();
 
-
-    IEnumerator ReturnBullet(Bullet bullet)
-    {
-        yield return bulletLifeTime;
-        bulletPool.objectPool.Release(bullet);
+        nextTimeToShoot = Time.fixedTime + fireRate;
     }
 }
