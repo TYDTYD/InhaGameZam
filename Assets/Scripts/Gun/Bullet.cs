@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     ObjectPool<Bullet> objectPool;
     WaitForSeconds bulletLifeTime;
     Rigidbody2D rb;
-    float speed = 40f;
+    float speed = 30f;
     int damage = 10;
     float lifeTime = 8f;
     bool isReleased = false;
