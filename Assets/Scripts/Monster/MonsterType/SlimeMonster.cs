@@ -28,7 +28,6 @@ public class SlimeMonster : MonoBehaviour
 
     private IPlayerDetector detector;
     private IChaseBehavior chaser;
-    private IAttackBehavior attacker;
     private IWatchBehavior watcher;
 
     private enum MonsterState { Patrol, Watch, Chase }
