@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
     [SerializeField] HealthBar healthBar;
 
+    // 체력 조정 함수 => IHealth 인터페이스를 통해 호출
     public void TakeDamage(int damage)
     {
         if (unbeatable)
@@ -26,6 +27,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         StartCoroutine(SetUnbeatable());
     }
 
+    // 데미지를 입었을 시 밀려나는 함수
     void KnockBack()
     {
         rb.AddForce(Vector2.up * knockbackForce);
@@ -39,6 +41,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         rb = GetComponent<Rigidbody2D>();
     }
 
+    // 무적 판정 함수
     IEnumerator SetUnbeatable()
     {
         unbeatable = true;
