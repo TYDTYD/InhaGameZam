@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerStamina : MonoBehaviour
 {
-    [SerializeField] StaminaBar staminaBar;
+    [SerializeField] StaminaBar[] staminaBar;
 
     float maxStamina = 10f;
     float currentStamina;
@@ -11,7 +11,10 @@ public class PlayerStamina : MonoBehaviour
     void Awake()
     {
         currentStamina = maxStamina;
-        staminaBar.SetMaxStamina(maxStamina);
+        foreach(var stamina in staminaBar)
+        {
+            stamina.SetMaxStamina(maxStamina);
+        }        
     }
 
     // Update is called once per frame
@@ -20,7 +23,10 @@ public class PlayerStamina : MonoBehaviour
         if (maxStamina > currentStamina)
         {
             currentStamina += recovery;
-            staminaBar.SetStamina(currentStamina);
+            foreach (var stamina in staminaBar)
+            {
+                stamina.SetStamina(currentStamina);
+            }            
         }
     }
 
@@ -29,6 +35,9 @@ public class PlayerStamina : MonoBehaviour
     public void UseStamina(float value)
     {
         currentStamina = Mathf.Max(currentStamina - value, 0f);
-        staminaBar.SetStamina(currentStamina);
+        foreach (var stamina in staminaBar)
+        {
+            stamina.SetStamina(currentStamina);
+        }
     }
 }

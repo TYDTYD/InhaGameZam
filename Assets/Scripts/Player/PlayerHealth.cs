@@ -55,7 +55,9 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {
         unbeatable = true;
         spriteRenderer.color = Color.gray;
+        Physics2D.IgnoreLayerCollision(9, 13, true);
         yield return GetWaitForSeconds;
+        Physics2D.IgnoreLayerCollision(9, 13, false);
         spriteRenderer.color = Color.white;
         unbeatable = false;
     }
