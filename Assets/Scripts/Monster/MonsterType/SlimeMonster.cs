@@ -44,7 +44,6 @@ public class SlimeMonster : MonoBehaviour
         // 전략 할당 (슬라임은 단순 추적 + 몸통박치기)
         detector = new HorizontalRangeDetector(detectRange, transform);
         chaser = new FullChase(chaseSpeed);
-        attacker = new TouchAttack(attackDamage, attackCooldown);
         watcher = new PassiveWatch(chaseRange);
     }
     void Update()
@@ -79,8 +78,6 @@ public class SlimeMonster : MonoBehaviour
 
             case MonsterState.Chase:
                 chaser.Chase(transform, player, rb);
-                attacker.Attack(transform, player);
-
                 if (!detected)
                 {
                     watcher.ResetWatch();

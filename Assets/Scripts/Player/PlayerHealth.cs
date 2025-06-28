@@ -8,15 +8,24 @@ public class PlayerHealth : MonoBehaviour, IHealth
     float knockbackForce = 10f;
     bool unbeatable = false;
     WaitForSeconds GetWaitForSeconds;
+    SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
 
     [SerializeField] HealthBar healthBar;
 
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     // 체력 조정 함수 => IHealth 인터페이스를 통해 호출
     public void TakeDamage(int damage)
     {
         if (unbeatable)
+        {
+            
             return;
+        }
+        
 
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
@@ -30,7 +39,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     // 데미지를 입었을 시 밀려나는 함수
     void KnockBack()
     {
-        rb.AddForce(Vector2.up * knockbackForce);
+        rb.AddForce(Vector2.up * knockbackForce, ForceMode2D.Impulse);
     }
 
     private void Awake()
