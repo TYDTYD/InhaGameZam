@@ -20,9 +20,9 @@ public class PlayerHealth : MonoBehaviour, IHealth
     // 체력 조정 함수 => IHealth 인터페이스를 통해 호출
     public void TakeDamage(int damage)
     {
+        // 무적이라면 넘어가기
         if (unbeatable)
         {
-            
             return;
         }
         
@@ -54,7 +54,9 @@ public class PlayerHealth : MonoBehaviour, IHealth
     IEnumerator SetUnbeatable()
     {
         unbeatable = true;
+        spriteRenderer.color = Color.gray;
         yield return GetWaitForSeconds;
+        spriteRenderer.color = Color.white;
         unbeatable = false;
     }
 }
