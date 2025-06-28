@@ -20,10 +20,7 @@ public class Gun : MonoBehaviour
         Bullet bullet = bulletPool.objectPool.Get();
 
         if (bullet == null)
-        {
-            Debug.Log("ÃÑ¾Ë ºÎÁ·");
             return;
-        }
             
 
         bullet.transform.SetPositionAndRotation(bulletSpawnPoint.transform.position, bulletSpawnPoint.rotation);
