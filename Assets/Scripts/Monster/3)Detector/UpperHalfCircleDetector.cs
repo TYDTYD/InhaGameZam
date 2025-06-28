@@ -16,11 +16,9 @@ public class UpperHalfCircleDetector : IPlayerDetector
     {
         Vector2 dir = player.position - monster.position;
 
-        // 전체 원 안에 들어오고
-        if (dir.y < 0) return false; // 아래에 있으면 무시
         if (dir.magnitude > radius) return false;
 
-
-        return false;
+        // 위쪽 반원만 감지
+        return dir.y > 0;
     }
 }
