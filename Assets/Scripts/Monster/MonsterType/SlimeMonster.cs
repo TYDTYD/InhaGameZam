@@ -47,7 +47,6 @@ public class SlimeMonster : MonoBehaviour
         attacker = new TouchAttack(attackDamage, attackCooldown);
         watcher = new PassiveWatch(chaseRange);
     }
-
     void Update()
     {
         if (player == null) return;
@@ -57,17 +56,19 @@ public class SlimeMonster : MonoBehaviour
         switch (state)
         {
             case MonsterState.Patrol:
-                Patrol(); // 순찰 상태일 때 Patrol 함수 호출
-                if (detected) // 플레이어가 감지 범위에 들어오면 감시 상태로 전환
+                Patrol();
+                if (detected)
                 {
-                    watcher.OnEnterWatch();
                     state = MonsterState.Watch;
                 }
                 break;
+
             case MonsterState.Watch:
                 watcher.Watch(transform, player, rb);
+                //Patrol();  // ← Watch 중에도 거리는 쌓임
                 if (!detected)
                 {
+                    watcher.ResetWatch();
                     state = MonsterState.Patrol;
                 }
                 else if (watcher.ShouldChase(transform, player))
@@ -75,14 +76,20 @@ public class SlimeMonster : MonoBehaviour
                     state = MonsterState.Chase;
                 }
                 break;
+
             case MonsterState.Chase:
                 chaser.Chase(transform, player, rb);
                 attacker.Attack(transform, player);
 
                 if (!detected)
                 {
-                    watcher.OnEnterWatch();
-                    state = MonsterState.Watch;
+                    watcher.ResetWatch();
+                    if ((player.position.x < transform.position.x && movingRight) ||    (player.position.x > transform.position.x && !movingRight))
+                    {
+                        Flip();
+                    }
+
+                    state = MonsterState.Patrol;
                 }
                 break;
         }
@@ -118,5 +125,4 @@ public class SlimeMonster : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
     }
-
 }
