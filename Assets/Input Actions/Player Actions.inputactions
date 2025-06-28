@@ -24,15 +24,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Shoot",
-                    "type": "Button",
-                    "id": "0fc9d3fe-1a4c-4579-80f8-7ee2d0f5f289",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "LookAt",
                     "type": "Value",
                     "id": "03f3006d-acd4-42d0-a69a-768c0f07c7d7",
@@ -161,17 +152,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "22c6e987-856f-4e25-a054-54a08e8f8e4c",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Hold(duration=0.2)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
