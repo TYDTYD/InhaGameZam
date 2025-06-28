@@ -11,26 +11,29 @@ public enum MoveState
 }
 public class PlayerMovement : MonoBehaviour
 {
-    Vector2 moveDirection;
+    [HideInInspector]
     public MoveState moveState;
+    Vector2 moveDirection;
     Rigidbody2D rigidBody2D;
     PlayerCollisionCheck collisionCheck;
     PlayerWallCollisionCheck wallCollisionCheck;
+    PlayerStamina playerStamina;
 
-    int stamina = 20;
     float moveSpeed = 5f;
     float dashSpeed = 20f;
+    float dashStamina = 1f;
     float jumpForce = 15f;
     float wallPushForce = 8f;
     float wallJumpCooldown = 0.1f;
     float wallJumpTimer = 0f;
-    bool jumped = false;
-    bool doubleJumped = false;
+    int jumpCount = 0;
+    int maxJumpCount = 2;
     void Start()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         collisionCheck = GetComponentInChildren<PlayerCollisionCheck>();
         wallCollisionCheck = GetComponent<PlayerWallCollisionCheck>();
+        playerStamina = GetComponent<PlayerStamina>();
     }
 
     // New Input System으로 입력을 받아 움직이는 함수
@@ -46,21 +49,15 @@ public class PlayerMovement : MonoBehaviour
     // 땅에 붙었을 때, 점프하는 함수
     void OnGroundJump()
     {
-        if (collisionCheck.groundCheck)
+        if (collisionCheck.GroundCheck)
         {
-            jumped = true;
-            doubleJumped = false;
-            rigidBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpCount = 0;
         }
-        else if (!jumped)
-        {
-            rigidBody2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            jumped = true;
-        }
-        else if (!doubleJumped)
-        {
-            rigidBody2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            doubleJumped = true;
+        
+        if (maxJumpCount > jumpCount)
+        {            
+            jumpCount++;
+            rigidBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);            
         }
     }
     Vector2 GetWallJumpForce(ContactInfo contact)
@@ -105,7 +102,11 @@ public class PlayerMovement : MonoBehaviour
             if (this.moveState == MoveState.MOVE)
             {
                 SetMoveState(MoveState.DASH);
-                StartCoroutine(Dash());
+                if(playerStamina.CanDash(dashStamina))
+                {
+                    playerStamina.UseStamina(dashStamina);
+                    StartCoroutine(Dash());
+                }                
             }            
         }
     }
