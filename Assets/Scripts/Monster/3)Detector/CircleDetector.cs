@@ -6,7 +6,7 @@ public class CircleDetector : IPlayerDetector
 {
     private float radius;
 
-    public CircleDetector(float radius)
+    public CircleDetector(float radius, Transform monsterTransform)
     {
         this.radius = radius;
     }

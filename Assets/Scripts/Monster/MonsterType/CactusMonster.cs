@@ -5,7 +5,7 @@ using UnityEngine;
 public class CactusMonster : MonoBehaviour
 {
     [Header("수치 설정")]
-    public float detectRange = 5f;
+    public float detectRange = 10f;
 
     private Rigidbody2D rb;
     private Transform player;
@@ -23,8 +23,12 @@ public class CactusMonster : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        detector = new UpperHalfCircleDetector(detectRange, transform);
-        //watcher = new PassiveWatch();  // ← 너가 구현한 Watcher 클래스 넣어줘
+        detector = new CircleDetector(detectRange, transform);
+        watcher = new PassiveWatch(detectRange);
+
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x); // 오른쪽 보게 강제
+        transform.localScale = scale;
     }
 
     void Update()
@@ -39,7 +43,11 @@ public class CactusMonster : MonoBehaviour
                 FaceOriginalDirection();
                 if (detected)
                 {
+
+                    watcher.Watch(transform, player, rb);
                     state = MonsterState.Watch;
+                    Debug.Log("Watching player!");
+                    
                 }
                 break;
 
