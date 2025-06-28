@@ -889,9 +889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85eab4dd4fb1410419dc2aa4b272dcb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 3247777012025253751, guid: 847ea7cf3c401994f814ebc5a8b7faa4,
-    type: 3}
-  bulletPool: {fileID: 1264530809}
+  objectPool: {fileID: 1264530809}
   bulletSpawnPoint: {fileID: 240635420}
 --- !u!114 &290913449
 MonoBehaviour:
@@ -3119,6 +3117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3247777012025253751, guid: 847ea7cf3c401994f814ebc5a8b7faa4,
+    type: 3}
+  missilePrefab: {fileID: 2389912821390281213, guid: da580953a221e63418e3e7219c2bfe6c,
     type: 3}
 --- !u!4 &1264530810
 Transform:
