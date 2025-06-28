@@ -42,7 +42,12 @@ public class PlayerMovement : MonoBehaviour
         Vector2 input = context.ReadValue<Vector2>();
         if (input != null)
         {
-            moveDirection = new Vector2(input.x, input.y);
+            SetMoveState(MoveState.MOVE);
+            moveDirection = new Vector2(input.x, input.y);            
+        }
+        else
+        {
+            SetMoveState(MoveState.NONE);
         }
     }
 
@@ -57,7 +62,8 @@ public class PlayerMovement : MonoBehaviour
         if (maxJumpCount > jumpCount)
         {            
             jumpCount++;
-            rigidBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);            
+            rigidBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            SetMoveState(MoveState.JUMP);
         }
     }
     Vector2 GetWallJumpForce(ContactInfo contact)
@@ -71,24 +77,25 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.performed)
         {
-            SetMoveState(MoveState.JUMP);
             switch (wallCollisionCheck.wallContacted)
             {
                 case ContactInfo.RIGHTWALL:
                     {
                         wallJumpTimer = wallJumpCooldown;
                         rigidBody2D.AddForce(GetWallJumpForce(ContactInfo.RIGHTWALL), ForceMode2D.Impulse);
+                        SetMoveState(MoveState.JUMP);
                         break;
                     }
                 case ContactInfo.LEFTWALL:
                     {
                         wallJumpTimer = wallJumpCooldown;
                         rigidBody2D.AddForce(GetWallJumpForce(ContactInfo.LEFTWALL), ForceMode2D.Impulse);
+                        SetMoveState(MoveState.JUMP);
                         break;
                     }
                 case ContactInfo.NONE:
                     {
-                        OnGroundJump();
+                        OnGroundJump();                        
                         break;
                     }
             }
@@ -101,9 +108,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (this.moveState == MoveState.MOVE)
             {
-                SetMoveState(MoveState.DASH);
                 if(playerStamina.CanDash(dashStamina))
                 {
+                    SetMoveState(MoveState.DASH);
                     playerStamina.UseStamina(dashStamina);
                     StartCoroutine(Dash());
                 }                
@@ -124,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
         // 몬스터와 플레이어와의 레이어 충돌 다시 켜기
         Physics2D.IgnoreLayerCollision(9, 13, false);
+        SetMoveState(MoveState.MOVE);
         moveSpeed = speed;
     }
 
@@ -133,8 +141,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (wallJumpTimer <= 0)
-        {
-            SetMoveState(MoveState.MOVE);
+        {           
             rigidBody2D.velocity = new Vector2(moveDirection.x * moveSpeed, rigidBody2D.velocity.y);
         }
         else

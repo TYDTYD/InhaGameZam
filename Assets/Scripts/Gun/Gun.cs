@@ -1,23 +1,28 @@
-using System.Collections;
 using UnityEngine;
 public class Gun : MonoBehaviour
 {
-    [SerializeField] Bullet bulletPrefab;
-    [SerializeField] ObjectPooling bulletPool;
+    [SerializeField] ObjectPooling objectPool;
     [SerializeField] Transform bulletSpawnPoint;
     float fireRate = 0.1f;
     float nextTimeToShoot;
+    float missileRate = 5f;
+    float nextTimeToMissileShoot;
     private void FixedUpdate()
     {
-        if (Input.GetMouseButton(0) && Time.fixedTime > nextTimeToShoot && bulletPool != null)
+        if (Input.GetMouseButton(0) && Time.fixedTime > nextTimeToShoot && objectPool != null)
         {
             Shoot();
+        }
+
+        if(Input.GetMouseButton(1) && Time.fixedTime > nextTimeToMissileShoot && objectPool != null)
+        {
+            MissileShoot();
         }
     }
 
     public void Shoot()
     {
-        Bullet bullet = bulletPool.objectPool.Get();
+        Bullet bullet = objectPool.bulletPool.Get();
 
         if (bullet == null)
             return;
@@ -30,5 +35,22 @@ public class Gun : MonoBehaviour
         bullet.Deactivate();
 
         nextTimeToShoot = Time.fixedTime + fireRate;
+    }
+
+    public void MissileShoot()
+    {
+        Missile missile = objectPool.missilePool.Get();
+
+        if (missile == null)
+            return;
+
+
+        missile.transform.SetPositionAndRotation(bulletSpawnPoint.transform.position, bulletSpawnPoint.rotation);
+        Vector2 dir = bulletSpawnPoint.transform.position - transform.parent.position;
+        missile.Fire(dir);
+
+        missile.Deactivate();
+
+        nextTimeToMissileShoot = Time.fixedTime + missileRate;
     }
 }

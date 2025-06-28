@@ -1,17 +1,16 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CursorFollower : MonoBehaviour
 {
     RectTransform cursorImage;
-    void Start()
+    void Awake()
     {
         cursorImage = GetComponent<RectTransform>();
         Cursor.visible = false;
     }
 
 
-    private void Update()
+    private void LateUpdate()
     {
         Vector2 mousePosition = Input.mousePosition;
         cursorImage.position = mousePosition;
@@ -20,10 +19,10 @@ public class CursorFollower : MonoBehaviour
     //private void OnEnable()
     //{
     //    if (UpdateManager.Instance != null)
-    //        UpdateManager.Instance.SubscribeUpdate(UpdateMethod);
+    //        UpdateManager.Instance.SubscribeLateUpdate(LateUpdateMethod);
     //}
 
-    //void UpdateMethod()
+    //void LateUpdateMethod()
     //{
     //    Vector2 mousePosition = Input.mousePosition;
     //    cursorImage.position = mousePosition;
@@ -33,6 +32,6 @@ public class CursorFollower : MonoBehaviour
     //private void OnDisable()
     //{
     //    if (UpdateManager.Instance != null)
-    //        UpdateManager.Instance.UnsubscribeUpdate(UpdateMethod);
+    //        UpdateManager.Instance.UnsubscribeLateUpdate(LateUpdateMethod);
     //}
 }

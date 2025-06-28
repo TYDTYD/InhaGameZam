@@ -6,13 +6,15 @@ using UnityEngine.Pool;
 public class ObjectPooling : MonoBehaviour
 {
     [SerializeField] Bullet bulletPrefab;
-    public ObjectPool<Bullet> objectPool;
+    [SerializeField] Missile missilePrefab;
+    public ObjectPool<Bullet> bulletPool;
+    public ObjectPool<Missile> missilePool;
     int defaultCapacity = 40;
     int maxSize = 100;
 
     void Awake()
     {
-        objectPool = new ObjectPool<Bullet>(
+        bulletPool = new ObjectPool<Bullet>(
             CreateBullet,
             OnGetBullet,
             OnReleaseBullet,
@@ -21,12 +23,22 @@ public class ObjectPooling : MonoBehaviour
             defaultCapacity, // Initial size of the pool
             maxSize // Maximum size of the pool
         );
+
+        missilePool = new ObjectPool<Missile>(
+            CreateMissile,
+            OnGetMissile,
+            OnReleaseMissile,
+            OnDestroyMissile,
+            true,
+            defaultCapacity,
+            maxSize
+            );
     }
 
     Bullet CreateBullet()
     {
         Bullet bullet = Instantiate(bulletPrefab);
-        bullet.Init(objectPool);
+        bullet.Init(bulletPool);
         bullet.transform.SetParent(transform);
         return bullet;
     }
@@ -48,5 +60,32 @@ public class ObjectPooling : MonoBehaviour
     void OnDestroyBullet(Bullet bullet)
     {
         Destroy(bullet.gameObject);
+    }
+
+    Missile CreateMissile()
+    {
+        Missile missile = Instantiate(missilePrefab);
+        missile.Init(missilePool);
+        missile.transform.SetParent(transform);
+        return missile;
+    }
+
+    void OnGetMissile(Missile missile)
+    {
+        if (missile != null)
+        {
+            missile.gameObject.SetActive(true);
+        }
+    }
+    void OnReleaseMissile(Missile missile)
+    {
+        if (missile != null)
+        {
+            missile.gameObject.SetActive(false);
+        }
+    }
+    void OnDestroyMissile(Missile missile)
+    {
+        Destroy(missile.gameObject);
     }
 }
