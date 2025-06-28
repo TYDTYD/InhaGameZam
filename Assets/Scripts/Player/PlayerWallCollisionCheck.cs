@@ -8,7 +8,7 @@ public enum ContactInfo
 
 public class PlayerWallCollisionCheck : MonoBehaviour
 {
-    
+    [HideInInspector]
     public ContactInfo wallContacted = ContactInfo.NONE;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -34,4 +34,11 @@ public class PlayerWallCollisionCheck : MonoBehaviour
         wallContacted = ContactInfo.NONE;
     }
 
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (wallContacted != ContactInfo.NONE)
+        {
+            wallContacted = ContactInfo.NONE;
+        }
+    }
 }
