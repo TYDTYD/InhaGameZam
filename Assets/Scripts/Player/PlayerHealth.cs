@@ -80,4 +80,12 @@ public class PlayerHealth : MonoBehaviour, IHealth
         currentHealth = Mathf.Min(currentHealth, maxHealth);
         healthBar.SetHealth(currentHealth);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.TryGetComponent(out Item item))
+        {
+            item.Use(this.gameObject);
+        }
+    }
 }

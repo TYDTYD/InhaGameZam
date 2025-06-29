@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     float moveSpeed = 5f;
     float dashSpeed = 20f;
     float dashStamina = 1f;
-    float jumpForce = 15f;
+    float jumpForce = 12f;
     float wallPushForce = 8f;
     float wallJumpCooldown = 0.1f;
     float wallJumpTimer = 0f;
@@ -42,15 +42,8 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
-        if (input != null)
-        {
-            SetMoveState(MoveState.MOVE);
-            moveDirection = new Vector2(input.x, input.y);            
-        }
-        else
-        {
-            SetMoveState(MoveState.NONE);
-        }
+        SetMoveState(MoveState.MOVE);
+        moveDirection = new Vector2(input.x, input.y);
     }
 
     // 땅에 붙었을 때, 점프하는 함수
@@ -64,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         if (maxJumpCount > jumpCount)
         {            
             jumpCount++;
+            rigidBody2D.velocity = Vector2.zero;
             rigidBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             SetMoveState(MoveState.JUMP);
         }
@@ -104,22 +98,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // 입력을 받아 Dash를 하는 함수
     public void OnDash(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            if (this.moveState == MoveState.MOVE)
+            if (playerStamina.CanDash(dashStamina) && moveDirection.x != 0)
             {
-                if(playerStamina.CanDash(dashStamina))
-                {
-                    SetMoveState(MoveState.DASH);
-                    playerStamina.UseStamina(dashStamina);
-                    StartCoroutine(Dash());
-                }                
-            }            
+                SetMoveState(MoveState.DASH);
+                playerStamina.UseStamina(dashStamina);
+                StartCoroutine(Dash());
+            }
         }
     }
 
+    // 실제 대시 동작 구현 함수
     IEnumerator Dash()
     {
         float speed = moveSpeed;
