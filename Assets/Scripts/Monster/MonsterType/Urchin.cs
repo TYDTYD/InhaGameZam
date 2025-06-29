@@ -19,7 +19,7 @@ public class Urchin : MonoBehaviour
     private Rigidbody2D rb;
     private Transform player;
     private Vector2 lastPosition;
-    private float moveDistance = 0f;
+    
     private bool movingRight = true;
 
     private IPlayerDetector detector;
