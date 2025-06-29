@@ -44,21 +44,27 @@ public class PlayerMovement : MonoBehaviour
     // New Input System으로 입력을 받아 움직이는 함수
     public void OnMove(InputAction.CallbackContext context)
     {
-        Vector2 input = context.ReadValue<Vector2>();
-        SetMoveState(MoveState.MOVE);
-        moveDirection = new Vector2(input.x, input.y);
+        if (context.performed)
+        {
+            Vector2 input = context.ReadValue<Vector2>();
+            SetMoveState(MoveState.MOVE);
+            moveDirection = new Vector2(input.x, input.y);
+        }
+        else if (context.canceled)
+        {
+            moveDirection = Vector2.zero;
+            SetMoveState(MoveState.NONE);
+        }
     }
 
     // 땅에 붙었을 때, 점프하는 함수
     void OnGroundJump()
     {
-        if (collisionCheck.GroundCheck)
-        {
+        if (collisionCheck.GroundCheck)        
             jumpCount = 0;
-        }
-        
+
         if (maxJumpCount > jumpCount)
-        {            
+        {
             jumpCount++;
             rigidBody2D.velocity = Vector2.zero;
             rigidBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
