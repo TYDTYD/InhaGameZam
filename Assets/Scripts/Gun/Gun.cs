@@ -5,7 +5,7 @@ public class Gun : MonoBehaviour
     [SerializeField] Transform bulletSpawnPoint;
     float fireRate = 0.1f;
     float nextTimeToShoot;
-    float missileRate = 5f;
+    float missileRate = 3f;
     float nextTimeToMissileShoot;
     private void FixedUpdate()
     {

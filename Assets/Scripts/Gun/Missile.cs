@@ -5,10 +5,11 @@ using UnityEngine.Pool;
 public class Missile : MonoBehaviour
 {
     [SerializeField] ParticleSystem trailEffect;
+    [SerializeField] GameObject explosionEffect;
     ObjectPool<Missile> objectPool;
     WaitForSeconds missileLifeTime;
     Rigidbody2D rb;
-    float speed = 25f;
+    float speed = 50f;
     int damage = 80;
     float lifeTime = 10f;
     bool isReleased = false;
@@ -59,21 +60,23 @@ public class Missile : MonoBehaviour
         }
         if (collision.gameObject.TryGetComponent(out IHealth health))
         {
+            ParticleManager.PlayParticle(explosionEffect, transform.position, Quaternion.identity);
             health.TakeDamage(damage);
             rb.velocity = Vector2.zero;
             if (!isReleased)
             {
                 isReleased = true;
-                objectPool.Release(this);
+                objectPool.Release(this);            
             }
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
+            ParticleManager.PlayParticle(explosionEffect, transform.position, Quaternion.identity);
             rb.velocity = Vector2.zero;
             if (!isReleased)
             {
                 isReleased = true;
-                objectPool.Release(this);
+                objectPool.Release(this);     
             }
         }
     }
