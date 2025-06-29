@@ -73,4 +73,11 @@ public class PlayerHealth : MonoBehaviour, IHealth
             yield return GetBlinkSeconds;
         }
     }
+
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+        healthBar.SetHealth(currentHealth);
+    }
 }
