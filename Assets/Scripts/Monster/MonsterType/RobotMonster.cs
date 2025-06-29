@@ -107,6 +107,7 @@ public class RobotMonster : MonoBehaviour
                     watcher.ResetWatch();
                     state = MonsterState.Patrol;
                 }
+                FlipToPlayer();
                 attacker.Attack(transform,player);
                 break;
         }
@@ -140,6 +141,21 @@ public class RobotMonster : MonoBehaviour
         Debug.DrawRay(wallCheck.position, Vector2.right * (movingRight ? 0.1f : -0.1f), Color.blue);
     }
 
+    void FlipToPlayer()
+    {
+        if (player.position.x < transform.position.x && transform.localScale.x > 0)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = -1f;
+            transform.localScale = scale;
+        }
+        else if (player.position.x > transform.position.x && transform.localScale.x < 0)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = 1f;
+            transform.localScale = scale;
+        }
+    }
     void Flip()
     {
         movingRight = !movingRight;

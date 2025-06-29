@@ -1518,6 +1518,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: slime2
       objectReference: {fileID: 0}
+    - target: {fileID: 5734053904583248719, guid: 3355d19ba13ea2a409ac46e27537926e,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6009438104021638322, guid: 3355d19ba13ea2a409ac46e27537926e,
         type: 3}
       propertyPath: attack
@@ -1527,6 +1532,11 @@ PrefabInstance:
         type: 3}
       propertyPath: damage
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176148921511614976, guid: 3355d19ba13ea2a409ac46e27537926e,
+        type: 3}
+      propertyPath: baseDamage
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2649,20 +2659,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: robot1
       objectReference: {fileID: 0}
-    - target: {fileID: 1112154102108506449, guid: fa0689a65cb04c54f890318f6abc7c05,
+    - target: {fileID: 3961557502656981588, guid: fa0689a65cb04c54f890318f6abc7c05,
         type: 3}
-      propertyPath: m_Layer
-      value: 13
+      propertyPath: baseDamage
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6083904786653156755, guid: fa0689a65cb04c54f890318f6abc7c05,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.280734
+      value: 9.26
       objectReference: {fileID: 0}
     - target: {fileID: 6083904786653156755, guid: fa0689a65cb04c54f890318f6abc7c05,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.277406
+      value: 6.02
       objectReference: {fileID: 0}
     - target: {fileID: 6083904786653156755, guid: fa0689a65cb04c54f890318f6abc7c05,
         type: 3}
@@ -5012,6 +5022,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1233630509}
     m_Modifications:
+    - target: {fileID: 559869796294959237, guid: 5df3d97a09486d24e89116af559b1a94,
+        type: 3}
+      propertyPath: baseDamage
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4073569082122633204, guid: 5df3d97a09486d24e89116af559b1a94,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5080,6 +5095,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1233630509}
     m_Modifications:
+    - target: {fileID: 1458706357033082556, guid: 216a3c0c20af00b49889eebf3b97b8ed,
+        type: 3}
+      propertyPath: baseDamage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4952875698537404823, guid: 216a3c0c20af00b49889eebf3b97b8ed,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5159,16 +5179,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Buzzsaw1
       objectReference: {fileID: 0}
-    - target: {fileID: 4371218215575543655, guid: 0bb1f0b520686344b8b81625e781a981,
-        type: 3}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4666784697699769421, guid: 0bb1f0b520686344b8b81625e781a981,
-        type: 3}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 6937234249653241698, guid: 0bb1f0b520686344b8b81625e781a981,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5218,11 +5228,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7478055147998468707, guid: 0bb1f0b520686344b8b81625e781a981,
-        type: 3}
-      propertyPath: m_Layer
-      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5297,11 +5302,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: slime1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6321532694082044096, guid: 3355d19ba13ea2a409ac46e27537926e,
-        type: 3}
-      propertyPath: damage
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
