@@ -3120,6 +3120,8 @@ MonoBehaviour:
     type: 3}
   missilePrefab: {fileID: 2389912821390281213, guid: da580953a221e63418e3e7219c2bfe6c,
     type: 3}
+  monsterBulletPrefab: {fileID: 3850921095390928425, guid: fcc74cc9c499d104e9cdaae3a180d3ba,
+    type: 3}
 --- !u!4 &1264530810
 Transform:
   m_ObjectHideFlags: 0
@@ -4233,9 +4235,9 @@ GameObject:
   - component: {fileID: 1588356665}
   - component: {fileID: 1588356668}
   - component: {fileID: 1588356664}
-  - component: {fileID: 1588356667}
   - component: {fileID: 1588356669}
   - component: {fileID: 1588356670}
+  - component: {fileID: 1588356671}
   m_Layer: 0
   m_Name: robot_0
   m_TagString: Untagged
@@ -4333,30 +4335,6 @@ Transform:
   - {fileID: 2009582789}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1588356667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588356663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68ccab5e22aa52b4ea38c1467fea6d66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolSpeed: 1
-  maxPatrolDistance: 7
-  detectRange: 5
-  chaseSpeed: 3
-  chaseRange: 3
-  attackDamage: 2
-  attackCooldown: 1
-  groundCheck: {fileID: 1892283616}
-  wallCheck: {fileID: 2009582789}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!50 &1588356668
 Rigidbody2D:
   serializedVersion: 4
@@ -4441,10 +4419,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81a3c15ee25bac46963b648052d2933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 1000
+  maxHp: 100
   currentHp: 0
   attack: 30
-  defense: 10
+  defense: 5
+--- !u!114 &1588356671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588356663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba564ad493220d648a92a8189a74a19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPool: {fileID: 1264530809}
+  patrolSpeed: 1
+  maxPatrolDistance: 7
+  detectRange: 20
+  stopRange: 19
+  chaseSpeed: 1
+  chaseRange: 20
+  attackDamage: 30
+  attackCooldown: 2
+  groundCheck: {fileID: 1892283616}
+  wallCheck: {fileID: 2009582789}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1001 &1612973029
 PrefabInstance:
   m_ObjectHideFlags: 0
