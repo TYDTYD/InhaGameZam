@@ -34,14 +34,11 @@ public class RobotMonster : MonoBehaviour
     private IWatchBehavior watcher;
     private IAttackBehavior attacker;
 
-    private Animator animator;
-
     private enum MonsterState { Patrol, Watch, Chase ,Attack}
     private MonsterState state = MonsterState.Patrol;
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         lastPosition = transform.position;
@@ -64,7 +61,6 @@ public class RobotMonster : MonoBehaviour
         {
             case MonsterState.Patrol:
                 Patrol();
-                animator.SetBool("Moving", Mathf.Abs(rb.velocity.x) > 0.05f);
                 if (detected)
                 {
                     state = MonsterState.Watch;
@@ -73,7 +69,6 @@ public class RobotMonster : MonoBehaviour
 
             case MonsterState.Watch:
                 watcher.Watch(transform, player, rb);
-                animator.SetBool("Moving", false);
                 //Patrol();  // ¡ç Watch Áß¿¡µµ °Å¸®´Â ½×ÀÓ
                 if (!detected)
                 {
@@ -97,8 +92,7 @@ public class RobotMonster : MonoBehaviour
                 {
                     rb.velocity = Vector2.zero;
                     state = MonsterState.Attack;
-                    animator.SetBool("Moving", false);
-
+                    
                 }
                 if (!detected)
                 {
@@ -108,14 +102,11 @@ public class RobotMonster : MonoBehaviour
                 break;
 
             case MonsterState.Attack:
-                rb.velocity = Vector2.zero; // ¿ÏÀüÈ÷ ¸ØÃã
-                animator.SetBool("Moving", false);
-                if (!detected)
+                if(!detected)
                 {
                     watcher.ResetWatch();
                     state = MonsterState.Patrol;
                 }
-                CheckAndFlip();
                 attacker.Attack(transform,player);
                 break;
         }
@@ -153,20 +144,5 @@ public class RobotMonster : MonoBehaviour
     {
         movingRight = !movingRight;
 
-    }
-    void CheckAndFlip()
-    {
-        if (player.position.x < transform.position.x && transform.localScale.x > 0)
-        {
-            Vector3 scale = transform.localScale;
-            scale.x = -1f;
-            transform.localScale = scale;
-        }
-        else if (player.position.x > transform.position.x && transform.localScale.x < 0)
-        {
-            Vector3 scale = transform.localScale;
-            scale.x = 1f;
-            transform.localScale = scale;
-        }
     }
 }
