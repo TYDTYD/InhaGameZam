@@ -42,4 +42,9 @@ public class MonsterStats : MonoBehaviour, IHealth
         //    GetComponent<MonsterStats>().TakeDamage(10);
         //}
     }
+
+    public void Heal(int amount)
+    {
+        
+    }
 }

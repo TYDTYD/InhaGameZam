@@ -61,6 +61,7 @@ public class Missile : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out IHealth health))
         {
             ParticleManager.PlayParticle(explosionEffect, transform.position, Quaternion.identity);
+            CameraManager.Instance.Shake(3.5f, 8f, 1f);
             health.TakeDamage(damage);
             rb.velocity = Vector2.zero;
             if (!isReleased)
@@ -72,6 +73,7 @@ public class Missile : MonoBehaviour
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             ParticleManager.PlayParticle(explosionEffect, transform.position, Quaternion.identity);
+            CameraManager.Instance.Shake(3.5f, 8f, 1f);
             rb.velocity = Vector2.zero;
             if (!isReleased)
             {
