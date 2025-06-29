@@ -2,5 +2,5 @@ using UnityEngine;
 
 public abstract class Item : MonoBehaviour
 {
-    protected abstract void Use(GameObject obj);
+    public abstract void Use(GameObject obj); 
 }
