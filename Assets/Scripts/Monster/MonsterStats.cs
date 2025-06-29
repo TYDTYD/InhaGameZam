@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterStats : MonoBehaviour, IHealth
@@ -32,8 +30,10 @@ public class MonsterStats : MonoBehaviour, IHealth
     {
         // Handle monster death (e.g., play animation, drop loot, etc.)
         Debug.Log($"{gameObject.name} has died.");
-        Destroy(gameObject); // Destroy the monster game object
+        //Destroy(gameObject); // Destroy the monster game object
+        gameObject.SetActive(false);
     }
+    
     void Update()
     { 
         // 임시: a 키 누르면 데미지 10 오브젝트 파괴 확인용

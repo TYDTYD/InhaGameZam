@@ -12,6 +12,10 @@ public class ObjectPooling : MonoBehaviour
     int defaultCapacity = 40;
     int maxSize = 100;
 
+    //몬스터용
+    [SerializeField] MonsterBullet monsterBulletPrefab;
+    public ObjectPool<MonsterBullet> monsterBulletPool;
+
     void Awake()
     {
         bulletPool = new ObjectPool<Bullet>(
@@ -33,6 +37,17 @@ public class ObjectPooling : MonoBehaviour
             defaultCapacity,
             maxSize
             );
+
+        monsterBulletPool = new ObjectPool<MonsterBullet>(
+            CreateMonsterBullet,
+            OnGetMonsterBullet,
+            OnReleaseMonsterBullet,
+            OnDestroyMonsterBullet,
+            true, 
+            defaultCapacity, 
+            maxSize
+            );
+
     }
 
     Bullet CreateBullet()
@@ -87,5 +102,32 @@ public class ObjectPooling : MonoBehaviour
     void OnDestroyMissile(Missile missile)
     {
         Destroy(missile.gameObject);
+    }
+
+    MonsterBullet CreateMonsterBullet()
+    {
+        MonsterBullet mbullet = Instantiate(monsterBulletPrefab);
+        mbullet.Init(monsterBulletPool);
+        mbullet.transform.SetParent(transform);
+        return mbullet;
+    }
+
+    void OnGetMonsterBullet(MonsterBullet mbullet)
+    {
+        if (mbullet != null)
+        {
+            mbullet.gameObject.SetActive(true);
+        }
+    }
+    void OnReleaseMonsterBullet(MonsterBullet mbullet)
+    {
+        if (mbullet != null)
+        {
+            mbullet.gameObject.SetActive(false);
+        }
+    }
+    void OnDestroyMonsterBullet(MonsterBullet mbullet)
+    {
+        Destroy(mbullet.gameObject);
     }
 }

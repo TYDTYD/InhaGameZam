@@ -2,23 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeMonster : MonoBehaviour
+public class RobotMonster : MonoBehaviour
 {
+
+    [SerializeField] ObjectPooling objectPool;
 
     [Header("수치 설정")]
     public float patrolSpeed = 1f;
     public float maxPatrolDistance = 7f;
-    public float detectRange = 5f;
-    public float chaseSpeed = 3f;
-    public float chaseRange = 3f;
-    public int attackDamage = 2;
-    public float attackCooldown = 1f;
+    public float detectRange = 20f;
+    public float stopRange = 19f;
+    public float chaseSpeed = 1f;
+    public float chaseRange = 20f;
+    public int attackDamage = 30;
+    public float attackCooldown = 5f;
 
 
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private Transform wallCheck;
+    public Transform groundCheck;
+    public Transform wallCheck;
     public LayerMask groundLayer;
-    
+
 
     private Rigidbody2D rb;
     private Transform player;
@@ -29,22 +32,25 @@ public class SlimeMonster : MonoBehaviour
     private IPlayerDetector detector;
     private IChaseBehavior chaser;
     private IWatchBehavior watcher;
+    private IAttackBehavior attacker;
 
-    private enum MonsterState { Patrol, Watch, Chase }
+    private enum MonsterState { Patrol, Watch, Chase ,Attack}
     private MonsterState state = MonsterState.Patrol;
-
-
+    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         lastPosition = transform.position;
 
-        // 전략 할당 (슬라임은 단순 추적 + 몸통박치기)
-        detector = new HorizontalRangeDetector(detectRange, transform);
-        chaser = new FullChase(chaseSpeed);
+        // 전략 할당 (로봇은 일정거리까지 접근후 총알발사)
+        detector = new CircleDetector(detectRange, transform);
+        chaser = new MaintainDistanceChase(chaseSpeed,stopRange);
         watcher = new PassiveWatch(chaseRange);
+        attacker = new ProjectileAttack(objectPool.monsterBulletPool, attackCooldown);
     }
+
+    // Update is called once per frame
     void Update()
     {
         if (player == null) return;
@@ -76,17 +82,32 @@ public class SlimeMonster : MonoBehaviour
                 break;
 
             case MonsterState.Chase:
-                chaser.Chase(transform, player, rb);
+                float dist = Vector2.Distance(transform.position, player.position);
+
+                if (dist > stopRange)
+                {
+                    chaser.Chase(transform, player, rb);
+                }
+                else // 이 부분! stopRange 이내면 Attack 진입
+                {
+                    rb.velocity = Vector2.zero;
+                    state = MonsterState.Attack;
+                    
+                }
                 if (!detected)
                 {
                     watcher.ResetWatch();
-                    if ((player.position.x < transform.position.x && movingRight) ||    (player.position.x > transform.position.x && !movingRight))
-                    {
-                        Flip();
-                    }
-
                     state = MonsterState.Patrol;
                 }
+                break;
+
+            case MonsterState.Attack:
+                if(!detected)
+                {
+                    watcher.ResetWatch();
+                    state = MonsterState.Patrol;
+                }
+                attacker.Attack(transform,player);
                 break;
         }
     }
