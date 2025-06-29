@@ -10,10 +10,11 @@ public class PlayerHealth : MonoBehaviour, IHealth
     bool unbeatable = false;
     WaitForSeconds GetWaitForSeconds;
     WaitForSeconds GetBlinkSeconds;
-    SpriteRenderer spriteRenderer;
+    
     Coroutine blinkCoroutine;
     Rigidbody2D rb;
 
+    MeshRenderer[] meshRenderers;
     [SerializeField] HealthBar healthBar;
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         GetWaitForSeconds = new WaitForSeconds(unbeatableTime);
         GetBlinkSeconds = new WaitForSeconds(blinkRate);
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        meshRenderers = GetComponentsInChildren<MeshRenderer>();
     }
 
     // 체력 조정 함수 => IHealth 인터페이스를 통해 호출
@@ -59,7 +60,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
         yield return GetWaitForSeconds;
         StopCoroutine(blinkCoroutine);
         Physics2D.IgnoreLayerCollision(9, 13, false);
-        spriteRenderer.color = Color.white;
+        foreach(var mesh in meshRenderers)        
+            mesh.material.color = Color.white;
         unbeatable = false;
     }
 
@@ -67,9 +69,11 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {
         while (true)
         {
-            spriteRenderer.color = Color.gray;
+            foreach (var mesh in meshRenderers)
+                mesh.material.color = Color.gray;
             yield return GetBlinkSeconds;
-            spriteRenderer.color = Color.white;
+            foreach (var mesh in meshRenderers)
+                mesh.material.color = Color.white;
             yield return GetBlinkSeconds;
         }
     }
