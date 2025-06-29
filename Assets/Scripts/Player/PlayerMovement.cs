@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerCollisionCheck collisionCheck;
     PlayerWallCollisionCheck wallCollisionCheck;
     PlayerStamina playerStamina;
+    SpriteRenderer spriteRenderer;
 
     float moveSpeed = 5f;
     float dashSpeed = 20f;
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
         collisionCheck = GetComponentInChildren<PlayerCollisionCheck>();
         wallCollisionCheck = GetComponent<PlayerWallCollisionCheck>();
         playerStamina = GetComponent<PlayerStamina>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // New Input System으로 입력을 받아 움직이는 함수
@@ -126,9 +128,12 @@ public class PlayerMovement : MonoBehaviour
         // 몬스터와 플레이어와의 레이어로 충돌 무시
         // 9 플레이어, 13 enemies
         Physics2D.IgnoreLayerCollision(9, 13, true);
+        float alpha = spriteRenderer.color.a;
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.6f);
 
         yield return new WaitForSeconds(0.2f);
 
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, alpha);
         // 몬스터와 플레이어와의 레이어 충돌 다시 켜기
         Physics2D.IgnoreLayerCollision(9, 13, false);
         SetMoveState(MoveState.MOVE);

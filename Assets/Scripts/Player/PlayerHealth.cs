@@ -6,17 +6,25 @@ public class PlayerHealth : MonoBehaviour, IHealth
     int currentHealth;
     float unbeatableTime = 1f;
     float knockbackForce = 10f;
+    float blinkRate = 0.1f;
     bool unbeatable = false;
     WaitForSeconds GetWaitForSeconds;
+    WaitForSeconds GetBlinkSeconds;
     SpriteRenderer spriteRenderer;
+    Coroutine blinkCoroutine;
     Rigidbody2D rb;
 
     [SerializeField] HealthBar healthBar;
-
-    private void Start()
+    private void Awake()
     {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+        GetWaitForSeconds = new WaitForSeconds(unbeatableTime);
+        GetBlinkSeconds = new WaitForSeconds(blinkRate);
+        rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
     // 체력 조정 함수 => IHealth 인터페이스를 통해 호출
     public void TakeDamage(int damage)
     {
@@ -42,23 +50,27 @@ public class PlayerHealth : MonoBehaviour, IHealth
         rb.AddForce(Vector2.up * knockbackForce, ForceMode2D.Impulse);
     }
 
-    private void Awake()
-    {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-        GetWaitForSeconds = new WaitForSeconds(unbeatableTime);
-        rb = GetComponent<Rigidbody2D>();
-    }
-
     // 무적 판정 함수
     IEnumerator SetUnbeatable()
     {
         unbeatable = true;
-        spriteRenderer.color = Color.gray;
+        blinkCoroutine = StartCoroutine(Blink());
         Physics2D.IgnoreLayerCollision(9, 13, true);
         yield return GetWaitForSeconds;
+        StopCoroutine(blinkCoroutine);
         Physics2D.IgnoreLayerCollision(9, 13, false);
         spriteRenderer.color = Color.white;
         unbeatable = false;
+    }
+
+    IEnumerator Blink()
+    {
+        while (true)
+        {
+            spriteRenderer.color = Color.gray;
+            yield return GetBlinkSeconds;
+            spriteRenderer.color = Color.white;
+            yield return GetBlinkSeconds;
+        }
     }
 }
