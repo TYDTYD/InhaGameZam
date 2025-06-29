@@ -9,7 +9,7 @@ public class MonsterBullet : MonoBehaviour
     WaitForSeconds bulletLifeTime;
     Rigidbody2D rb;
     float speed = 10f; // 몬스터 총알은 느려도 됨
-    int damage = 10;
+    public int damage = 10;
     float lifeTime = 6f;
     bool isReleased = false;
 
