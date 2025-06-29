@@ -96,6 +96,10 @@ public class SlimeMonster : MonoBehaviour
         float dir = movingRight ? 1f : -1f;
         rb.velocity = new Vector2(dir * patrolSpeed, rb.velocity.y);
 
+        Vector3 scale = transform.localScale;
+        scale.x = movingRight ? 1f : -1f;
+        transform.localScale = scale;
+
         Vector2 groundCheckPos = groundCheck.position + Vector3.right * (movingRight ? 0.3f : -0.3f);
         RaycastHit2D groundHit = Physics2D.Raycast(groundCheckPos, Vector2.down, 0.1f, groundLayer);
         RaycastHit2D wallHit = Physics2D.Raycast(wallCheck.position, Vector2.right * (movingRight ? 1f : -1f), 0.1f, groundLayer);
@@ -117,8 +121,6 @@ public class SlimeMonster : MonoBehaviour
     void Flip()
     {
         movingRight = !movingRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
+
     }
 }
