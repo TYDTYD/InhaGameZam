@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class LeftArmAttack : MonoBehaviour
 {
-    [SerializeField] ObjectPooling objectPool;   // ¿ÀºêÁ§Æ® Ç® ÇÒ´ç
-    [SerializeField] Transform firePoint;        // ÃÑ±¸ À§Ä¡ ºó ¿ÀºêÁ§Æ®
-    [SerializeField] Transform player;        // ÃÑ±¸ À§Ä¡ ºó ¿ÀºêÁ§Æ®
+    [SerializeField] ObjectPooling objectPool;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç® ï¿½Ò´ï¿½
+    [SerializeField] Transform firePoint;        // ï¿½Ñ±ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    [SerializeField] Transform player;        // ï¿½Ñ±ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public int bulletCount = 20;
-    public float shootInterval = 1f;           // ÃÑ¾Ë °£°Ý
+    public float shootInterval = 1f;           // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 
 
@@ -16,7 +16,7 @@ public class LeftArmAttack : MonoBehaviour
     {
         if (player != null)
         {
-            // 1. ÆÈ(LeftArm)ÀÌ ÇÃ·¹ÀÌ¾î¸¦ ÇâÇÏ°Ô È¸Àü
+            // 1. ï¿½ï¿½(LeftArm)ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½Ï°ï¿½ È¸ï¿½ï¿½
             Debug.Log(player.position);
             Vector2 dir = player.position - transform.position;
             
@@ -39,9 +39,9 @@ public class LeftArmAttack : MonoBehaviour
             bullet.transform.position = firePoint.position;
             bullet.transform.rotation = firePoint.rotation;
             
-            // ÇÃ·¹ÀÌ¾î ¹æÇâ °è»ê
+            // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             Vector2 dir = (player.position - firePoint.position).normalized;
-            bullet.Fire(dir);  // ¡ç ÇÃ·¹ÀÌ¾î ÂÊÀ¸·Î ¹ß»ç
+            bullet.Fire(dir);  // ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½
 
             yield return new WaitForSeconds(shootInterval);
         }
