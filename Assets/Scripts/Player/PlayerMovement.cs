@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // 땅에 붙었을 때, 점프하는 함수
-    void OnGroundJump()
+    bool OnGroundJump()
     {
         if (collisionCheck.GroundCheck)        
             jumpCount = 0;
@@ -69,7 +69,9 @@ public class PlayerMovement : MonoBehaviour
             rigidBody2D.velocity = Vector2.zero;
             rigidBody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             SetMoveState(MoveState.JUMP);
+            return true;
         }
+        return false;
     }
     Vector2 GetWallJumpForce(ContactInfo contact)
     {
@@ -82,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.performed)
         {
+            
             switch (wallCollisionCheck.wallContacted)
             {
                 case ContactInfo.RIGHTWALL:
@@ -89,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
                         wallJumpTimer = wallJumpCooldown;
                         rigidBody2D.AddForce(GetWallJumpForce(ContactInfo.RIGHTWALL), ForceMode2D.Impulse);
                         SetMoveState(MoveState.JUMP);
+                        SoundManager.Instance.PlaySound(SoundType.Jump);
                         break;
                     }
                 case ContactInfo.LEFTWALL:
@@ -96,11 +100,14 @@ public class PlayerMovement : MonoBehaviour
                         wallJumpTimer = wallJumpCooldown;
                         rigidBody2D.AddForce(GetWallJumpForce(ContactInfo.LEFTWALL), ForceMode2D.Impulse);
                         SetMoveState(MoveState.JUMP);
+                        SoundManager.Instance.PlaySound(SoundType.Jump);
                         break;
                     }
                 case ContactInfo.NONE:
                     {
-                        OnGroundJump();                        
+                        bool jumpsuccess = OnGroundJump();
+                        if(jumpsuccess)
+                            SoundManager.Instance.PlaySound(SoundType.Jump);
                         break;
                     }
             }
@@ -116,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 SetMoveState(MoveState.DASH);
                 playerStamina.UseStamina(dashStamina);
+                SoundManager.Instance.PlaySound(SoundType.Dash);
                 StartCoroutine(Dash());
             }
         }

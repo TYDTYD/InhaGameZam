@@ -40,6 +40,8 @@ public class Gun : MonoBehaviour
         Vector2 dir = mouseWorldPos - (Vector2)bulletSpawnPoint.transform.position;
         bullet.Fire(dir);
 
+        SoundManager.Instance.PlaySound(SoundType.Shoot);
+
         bullet.Deactivate();
 
         nextTimeToShoot = Time.fixedTime + fireRate;
@@ -57,6 +59,8 @@ public class Gun : MonoBehaviour
         missile.transform.SetPositionAndRotation(bulletSpawnPoint.transform.position, bulletSpawnPoint.rotation);
         Vector2 dir = mouseWorldPos - (Vector2)bulletSpawnPoint.transform.position;
         missile.Fire(dir);
+
+        SoundManager.Instance.PlaySound(SoundType.Missile);
 
         missile.Deactivate();
 
