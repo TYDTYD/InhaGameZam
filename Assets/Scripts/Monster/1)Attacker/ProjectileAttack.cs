@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -22,7 +20,6 @@ public class ProjectileAttack : IAttackBehavior
 
         Vector2 direction = (player.position - monster.position).normalized;
 
-        Debug.Log("발사체 공격!");
         MonsterBullet bullet = pool.Get();
         bullet.transform.position = monster.position;
         bullet.Fire(direction); // 방향 넘기기

@@ -9,6 +9,7 @@ public class GoToMain : MonoBehaviour
     private void Awake()
     {
         GoToMainButton = GetComponent<Button>();
+        Cursor.visible = true;
     }
 
     private void Start()

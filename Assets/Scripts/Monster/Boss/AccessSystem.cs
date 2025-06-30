@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Cinemachine;
 public class AccessSystem : MonoBehaviour
 {
     bool isActive = false;
@@ -8,7 +9,9 @@ public class AccessSystem : MonoBehaviour
     [SerializeField] Transform block;
     [SerializeField] Transform BossDoor;
     [SerializeField] Transform BossMonster;
-
+    [SerializeField] CinemachineCamera BossStageCamera;
+    [SerializeField] GameObject backGround;
+    [SerializeField] GameObject BossHealthBar;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -27,7 +30,22 @@ public class AccessSystem : MonoBehaviour
     void StartSystem()
     {
         isActive = true;
+        BossStageCamera.Priority = 2;
+        BossHealthBar.SetActive(true);
+        HealthBar BossHpBar = BossHealthBar.GetComponent<HealthBar>();
+        BossHpBar.SetMaxHealth(BossMonster.GetComponent<MonsterStats>().currentHp);
+        StartCoroutine(BiggerBackGround());
         StartCoroutine(BossSystem());
+    }
+
+    IEnumerator BiggerBackGround()
+    {
+        Vector3 diff = new Vector3(0.1f, 0.1f);
+        while(backGround.transform.localScale.x < 4)
+        {
+            backGround.transform.localScale += diff;
+            yield return cache;
+        }
     }
     IEnumerator BossSystem()
     {
