@@ -2902,6 +2902,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 8cb7d0b9cd987ea41b2df7b177794df1, type: 3}
   - type: 8
     clip: {fileID: 8300000, guid: 904ab132cb07be94180b7c15dff7fddf, type: 3}
+  - type: 9
+    clip: {fileID: 8300000, guid: 39dd9cf791158e44fa827e8b85c6cc4a, type: 3}
+  - type: 10
+    clip: {fileID: 8300000, guid: acab72af9fb072a42ac2de34faaae803, type: 3}
 --- !u!4 &1324474530
 Transform:
   m_ObjectHideFlags: 0
