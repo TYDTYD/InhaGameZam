@@ -46,7 +46,6 @@ public class CactusMonster : MonoBehaviour
 
                     watcher.Watch(transform, player, rb);
                     state = MonsterState.Watch;
-                    Debug.Log("Watching player!");
                     
                 }
                 break;
