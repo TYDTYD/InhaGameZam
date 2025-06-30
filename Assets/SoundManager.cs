@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //사운드 타입 정의
 public enum SoundType
 {
     //main 화면 사운드
-
-
-
-
+    MainBackgroundMusic,
+    MainButtonClick,
+    MainGameStart,
 
     //stage 사운드
     Shoot,
@@ -31,9 +31,9 @@ public struct SoundEntry
 }
 
 //SoundManager 싱글톤
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
-    public static SoundManager Instance { get; private set; }
+    //public static SoundManager Instance { get; private set; }
 
     //사운드 매핑
     [SerializeField] private List<SoundEntry> soundTable;
@@ -45,19 +45,9 @@ public class SoundManager : MonoBehaviour
     private AudioSource bgmSource;
 
 
-    void Awake()
+    protected override void OnAwakeWork()
     {
-        // 싱글톤 세팅
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        DontDestroyOnLoad(gameObject);
 
         // AudioSource 컴포넌트 세팅
         audioSource = gameObject.AddComponent<AudioSource>();
@@ -77,16 +67,42 @@ public class SoundManager : MonoBehaviour
         foreach (var entry in soundTable)
             clipMap[entry.type] = entry.clip;
 
-        if (clipMap.TryGetValue(SoundType.BackgroundMusic, out var bgmClip) && bgmClip != null)
-        {
-            bgmSource.clip = bgmClip;
-            bgmSource.Play();
-        }
+        // 씬 전환 이벤트 구독
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        // 첫 씬(Startup)도 바로 재생
+        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
 
     }
+
+    protected override void OnDestroyedWork()
+    {
+        // 반드시 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // 씬이 바뀔 때마다 호출
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 이전 BGM 멈춤
+        if (bgmSource.isPlaying) bgmSource.Stop();
+
+        // 재생할 타입 결정
+        SoundType typeToPlay;
+        if (scene.name == "Main") typeToPlay = SoundType.MainBackgroundMusic;
+        else if (scene.name == "Stage") typeToPlay = SoundType.BackgroundMusic;
+        else return; // 그 외 씬은 BGM 없음
+
+        // 클립이 있으면 재생
+        if (clipMap.TryGetValue(typeToPlay, out var clip) && clip != null)
+        {
+            bgmSource.clip = clip;
+            bgmSource.Play();
+        }
+    }
+
     public void PlaySound(SoundType type, float volume = 0.3f)
     {
-        if (type == SoundType.BackgroundMusic)
+        if (type == SoundType.BackgroundMusic || type == SoundType.MainBackgroundMusic)
             return; // 배경음악은 별도로 처리
 
         if (clipMap.TryGetValue(type, out var clip) && clip != null)

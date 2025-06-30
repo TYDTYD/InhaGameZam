@@ -11,14 +11,35 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+
+        GameStartButton.onClick.RemoveAllListeners();
         GameStartButton.onClick.AddListener(ChangeScene);
+
+
+        HowToPlayButton.onClick.RemoveAllListeners();
         HowToPlayButton.onClick.AddListener(EnableHowToPlay);
+
+        QuitButton.onClick.RemoveAllListeners();
         QuitButton.onClick.AddListener(DisableHowToPlay);
+
     }
 
-    void EnableHowToPlay() => HowToPlayUI.SetActive(true);
+    void EnableHowToPlay()
+    {
+        SoundManager.Instance.PlaySound(SoundType.MainButtonClick);
+        HowToPlayUI.SetActive(true);
 
-    void DisableHowToPlay() => HowToPlayUI.SetActive(false);
+    }
 
-    void ChangeScene() => SceneManager.LoadScene("Stage");
+    void DisableHowToPlay()
+    {
+        SoundManager.Instance.PlaySound(SoundType.MainButtonClick);
+        HowToPlayUI.SetActive(false);
+    }
+
+    void ChangeScene()
+    {
+        SoundManager.Instance.PlaySound(SoundType.MainButtonClick);
+        SceneManager.LoadScene("Stage");
+    }
 }

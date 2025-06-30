@@ -41,6 +41,8 @@ public class PlayerHealth : MonoBehaviour, IHealth
         healthBar.SetHealth(currentHealth);
 
         KnockBack();
+        SoundManager.Instance.PlaySound(SoundType.GetHit);
+
 
         StartCoroutine(SetUnbeatable());
     }
