@@ -4252,63 +4252,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1001563523}
   m_CullTransparentMesh: 1
---- !u!1 &1036309292
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1036309294}
-  - component: {fileID: 1036309293}
-  m_Layer: 0
-  m_Name: SoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1036309293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1036309292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc3ef1a05dd15b040839070adc57b8e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundTable:
-  - type: 0
-    clip: {fileID: 8300000, guid: 4de5980f0f2e2724a97c16a8623cd251, type: 3}
-  - type: 1
-    clip: {fileID: 8300000, guid: 79eab4e23e5c59a4d8412b9a86124778, type: 3}
-  - type: 2
-    clip: {fileID: 8300000, guid: d4f963e1fb34c6441b5188289f973106, type: 3}
-  - type: 3
-    clip: {fileID: 8300000, guid: 10529216ae6632a45a2ade1ca8f87633, type: 3}
-  - type: 4
-    clip: {fileID: 8300000, guid: fc6a8ed8f767ee7449dc2f51593060a7, type: 3}
-  - type: 5
-    clip: {fileID: 8300000, guid: 904ab132cb07be94180b7c15dff7fddf, type: 3}
---- !u!4 &1036309294
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1036309292}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 185.1589, y: 155.72516, z: -3.2235963}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1047318832
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8774,4 +8717,3 @@ SceneRoots:
   - {fileID: 800713520}
   - {fileID: 1424845216}
   - {fileID: 2046165820}
-  - {fileID: 1036309294}
