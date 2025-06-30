@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour, IHealth
 {
     int maxHealth = 100;
@@ -33,12 +34,16 @@ public class PlayerHealth : MonoBehaviour, IHealth
         if (unbeatable)
         {
             return;
-        }
-        
+        }        
 
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
         healthBar.SetHealth(currentHealth);
+
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
 
         KnockBack();
         SoundManager.Instance.PlaySound(SoundType.GetHit);
@@ -85,6 +90,11 @@ public class PlayerHealth : MonoBehaviour, IHealth
         currentHealth += amount;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
         healthBar.SetHealth(currentHealth);
+    }
+
+    void Die()
+    {
+        SceneManager.LoadScene("Death");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
