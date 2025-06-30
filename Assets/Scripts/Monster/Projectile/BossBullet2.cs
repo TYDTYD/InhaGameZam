@@ -11,7 +11,7 @@ public class BossBullet2 : MonoBehaviour
     Rigidbody2D rb;
     float speed = 3f; // 몬스터 총알은 느려도 됨
     public int damage = 50;
-    float lifeTime = 20f;
+    float lifeTime = 110f;
     bool isReleased = false;
 
     void Awake()

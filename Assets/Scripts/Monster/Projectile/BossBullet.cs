@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -11,7 +10,7 @@ public class BossBullet : MonoBehaviour
     Rigidbody2D rb;
     float speed = 10f; // ∏ÛΩ∫≈Õ √—æÀ¿∫ ¥¿∑¡µµ µ 
     public int damage = 30;
-    float lifeTime = 6f;
+    float lifeTime = 30f;
     bool isReleased = false;
 
     void Awake()
