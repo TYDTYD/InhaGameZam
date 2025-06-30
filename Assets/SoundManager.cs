@@ -20,6 +20,9 @@ public enum SoundType
     BackgroundMusic,
 
     // …추가 가능
+    GameOver,
+    GameClear,
+
 }
 
 //인스펙터에서 사운드 타입 넣기 위한 구조체
@@ -90,6 +93,12 @@ public class SoundManager : Singleton<SoundManager>
         SoundType typeToPlay;
         if (scene.name == "Main") typeToPlay = SoundType.MainBackgroundMusic;
         else if (scene.name == "Stage") typeToPlay = SoundType.BackgroundMusic;
+        else if (scene.name == "Death")
+        {
+            typeToPlay = SoundType.GameOver;
+            bgmSource.loop = false;
+        }
+        else if (scene.name == "Clear") typeToPlay = SoundType.GameClear;
         else return; // 그 외 씬은 BGM 없음
 
         // 클립이 있으면 재생
