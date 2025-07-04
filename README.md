@@ -1,7 +1,7 @@
 # Alien Alien
 ![게임잼 바탕화면](https://github.com/user-attachments/assets/6d18c24b-cf27-448d-ba38-3d89dbe5b988)
 
-### [플레이 영상]
+### [플레이 영상](https://www.youtube.com/watch?v=exf7z1NSiOM)
 
 ## 프로젝트 소개
 - 게임 장르 : 2D 플랫포머
