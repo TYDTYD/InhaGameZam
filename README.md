@@ -18,9 +18,9 @@
 <table>
     <tr height="140px">
         <td align="center" width="130px">
-            <a href="https://github.com/youwonsock"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/46276141?v=4"/></a>
+            <a href="https://github.com/LSM950"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/46276141?v=4"/></a>
             <br />
-            <a href="https://github.com/youwonsock">LSM950</a>
+            <a href="https://github.com/LSM950">LSM950</a>
         </td>
         <td align="center" width="130px">
             <a href="https://github.com/TYDTYD"><img height="100px" width="100px" src="https://avatars.githubusercontent.com/u/48386074?v=4"/></a>
